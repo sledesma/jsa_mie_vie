@@ -2,6 +2,7 @@ const tabLinks = document.querySelectorAll('.tabs-link');
 let tabs = [];
 
 // Inicializar las petañas en falso
+/// CAMBIO EL ARRAY EN FUNCION DEL DOM
 tabLinks.forEach(function(el){
     tabs.push({ selector: el.dataset.link, visible: false });
 });
@@ -22,7 +23,8 @@ tabLinks.forEach(function(el){
     });
 });
 
-// Procesar las pestañas e impactar ene l DOM
+// Procesar las pestañas e impactar en el DOM
+//// CAMBIO EL DOM EN FUNCION DEL ARRAY
 function doTabs(tablist) {
     tablist.forEach(function(t){
         const el = document.querySelector(t.selector);
@@ -33,3 +35,7 @@ function doTabs(tablist) {
         }
     });
 }
+
+
+
+// VAMOS A VER EL CÓDIGO. 17:30 RESOLVEMOS DUDAS

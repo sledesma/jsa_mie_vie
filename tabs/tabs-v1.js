@@ -12,8 +12,8 @@ let tab1Visible = false;
 let tab2Visible = false;
 let tab3Visible = false;
 
-link1.addEventListener('click', function(event){
-    event.preventDefault();
+link1.addEventListener('click', function(a){
+    a.preventDefault();
     
     if(tab2Visible) {
         tab2.style = 'display: none';
