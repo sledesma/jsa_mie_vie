@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <input type="text" placeholder="Introduce tu nombre" id="txt-nombre">
+    <div id="lbl-nombre">Hola: </div>
+
+    <script>
+        /*
+        // Todos los elementos del DOM implementan EventTarget
+        const btnAgregar = document.querySelector('#btn-agregar');
+
+        btnAgregar.addEventListener('click', function(){
+            alert('Has hecho click en el botón');
+        });
+        */
+        const txtNombre = document.getElementById('txt-nombre');
+        const lblNombre = document.querySelector('#lbl-nombre');
+        /*
+        Evento: Ingreso por teclado
+        Target: Input
+        */
+        txtNombre.addEventListener('input', function(){
+            lblNombre.innerText = 'Hola: ' + txtNombre.value;
+        });
+
+    </script>
+</body>
+</html>

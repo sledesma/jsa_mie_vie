@@ -1,0 +1,72 @@
+ORGANIZACION DEL CURSO:
+        1) DOM (clase 1)
+        2) Eventos (clase 2 y 3)
+        3) Asincrónico (clase 4, 5, 6 y 7)
+        4) Objetos (clase 8 y 9)
+        5) Patrones de diseño (clase 10)
+        6) Utilidades (clase 11)
+        7) Node.Js y NPM (clase 12)
+
+
+EVENTOS:
+Cosas que suceden
+Disparador
+
+1) Empezó a gotear la canilla
+2) Sonó el timbre de mi vecnio
+3) Se está quemando la computadora
+
+Evento / Event = Acontecimiento (cosa que sucede) Importante
+Desencadenante / Trigger = ¿Qué desencadena el evento?
+Respuesta / Callback = ¿Cómo respondo a ese evento?
+Lugar / Target = ¿Dónde ocurre el evento?
+
+API = Medio para programar
+
+Event / EventTarget => Programar aplicaciones (JS) en las que ocurran EVENTOS
+
+¿Qué quiere representar esto?
+Event: UN EVENTO
+EventTarget: UN LUGAR DONDE OCURREN EVENTOS
+    target.addEventListener(event, callback)
+    target.dispatchEvent(event)
+    target.removeEventListener(event)
+
+
+
+
+
+
+
+
+
+
+
+
+
+. Cuando la computadora alcance una temperatura mayor a 50 grados, 
+disparar el evento "ComputadoraSobrecargada"
+
+
+. Abro una ventana / Tem = 10
+. Abro 10 ventanas / Tem = 30
+. Abro 100 ventanas / Tem = 50
+. Abro el VS Code / Tem = 55
+- Se apaga la máquina.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
