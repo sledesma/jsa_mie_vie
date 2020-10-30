@@ -1,0 +1,39 @@
+<html>
+    <head>
+        <title>Formulario 2</title>
+    </head>
+    <body>
+        <form>
+            <h1>Recibir el envío</h1>
+            <input type="email" id="email">
+            <select id="sltHorarios"></select>
+        </form>
+        
+        <script>
+            // Impacto = CAMBIO EN EL DOM
+            const horarios = [
+                { horario: '10:00 a 13:00', disponible: true },
+                { horario: '15:00 a 18:00', disponible: false },
+                { horario: '19:00 a 22:00', disponible: true }
+            ];
+            
+            const horariosMapElementos = horarios.map(function(horario){
+                if(horario.disponible) {
+                    const el = document.createElement('option');
+                    el.innerHTML = horario.horario;
+                    return el;
+                } 
+            });
+            
+            console.log(horariosMapElementos);
+
+            const aux = document.createDocumentFragment();
+            horariosMapElementos.forEach(function(horarioElemento){
+                if(horarioElemento)
+                    aux.appendChild(horarioElemento);
+            });
+            
+            document.getElementById('sltHorarios').appendChild(aux);
+        </script>
+    </body>
+</html>
