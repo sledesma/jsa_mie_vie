@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <input type="text" id="txtBusqueda" placeholder="Buscar" disabled />
+
+    <div id="resultados"></div>
+
+    <script>
+      const xhr = new XMLHttpRequest();
+
+      xhr.open("GET", "https://5fa2faabba0736001613c519.mockapi.io/usuarios");
+
+      xhr.send();
+
+      xhr.addEventListener('readystatechange', function(){
+        if(xhr.readyState === 4 && xhr.status === 200) {
+            // ACA TENGO EL LOAD
+        }
+      });
+
+      xhr.addEventListener("load", function () {
+        const txtBusqueda = document.querySelector("#txtBusqueda");
+        const resultados = document.querySelector("#resultados");
+        const datos = JSON.parse(xhr.response);
+
+        txtBusqueda.removeAttribute('disabled');
+
+        txtBusqueda.addEventListener("input", function () {
+          
+          resultados.innerHTML = "";
+
+          const frag = document.createDocumentFragment();
+
+          datos
+            .filter(function (val) {
+              return val.name.includes(txtBusqueda.value);
+            })
+            .forEach(function (val) {
+              const el = document.createElement("div");
+              el.innerHTML = `${val.id} | <b>${val.name}</b>`;
+              frag.appendChild(el);
+            });
+
+          resultados.append(frag);
+
+        });
+
+      });
+
+      /**
+       * 
+       * 1. Diseñar una interfaz que permita buscar usuarios sin recargar la página. Los usuarios listados deben mostrarse en una tabla HTML. Al hacer click el ID de un usuario, se deberá mostrar su información por la consola.
+       EXTRA: Los datos se deben mostrar en la página HTML
+       https://5fa2faabba0736001613c519.mockapi.io/usuarios
+       *  
+       * 2. La API REST JsonPlaceHolder ofrece información relativa a usuarios y posts. Tu trabajo será diseñar una interfaz que me solicite al ingresar mi
+       número de usuario. Al introducirlo deberé ver toda la información personal,
+       junto con una tabla con algunos datos de mis posts publicados. Al hacer
+       click en uno de ellos, debería poder ver sus datos por consola.
+       EXTRA: Los datos del post se deben mostrar en la página HTML
+       https://jsonplaceholder.typicode.com/users
+       https://jsonplaceholder.typicode.com/posts
+       * 
+       * 3. Hacer todo el punto 2 sumando la posibilidad de Editar, Borrar y Crear POSTS. (Recuerda que deberás respetar los métodos HTTP correspondientes en las peticiones: PUT, DELETE, POST)
+       * */
+    </script>
+  </body>
+</html>
