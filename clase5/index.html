@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SPA</title>
+</head>
+<body>
+    
+    <nav>
+        <ul>
+            <li><a href="#" class="http-link">Inicio</a></li>
+            <li><a href="#" class="http-link">Nosotros</a></li>
+            <li><a href="#" class="http-link">Contacto</a></li>
+        </ul>
+    </nav>
+    <div id="contenido"></div>
+
+    <script>
+        const link = document.querySelector('.http-link');
+        const contenido = document.querySelector('#contenido');
+
+        link.addEventListener('click', function(e){
+            e.preventDefault();
+
+            const xhr = new XMLHttpRequest;
+            xhr.open('GET','pages/inicio.html');
+            xhr.send();
+            xhr.addEventListener('load', function(){
+                contenido.innerHTML = xhr.response;
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+Maq1 ---------- Maq2
+Solicita       Envia
+
+TRES CASOS PARA CARGAR producto.html
+
+1) La página está en la Maq2 y la Maq1 la solicita cada vez que abre la página.
+"El mapa se solicita al servidor cada vez que entro al juego"
+
+2) La página está en la Maq1, pero solicita de vez en cuando información en la Maq2
+"El mapa se carga en la máquina cliente, pero se conecta al servidor para recibir información al cabo de 1 hora de juego"
+
+3) La página se solicita una sola vez a la Maq2 y, luego, se carga en la Maq1
+"El mapa se descarga del servidor y se almacena en la máquina cliente. Se solicita únicamente desde la máquina cliente"
+
+* Un mapa que no cambie nunca (Que prácticamente no haya consultas al servidor durante el juego)
+    Caso 3
+* Un mapa que cambia constantemente
+    Caso 1
+
+
+
+
+
+
+
+
+
+
+
+SERVER-SIDE RENDERING: Armar la página en el servidor cada vez que es solicitada.
+
+El cliente solicita holamundo.php
+El servidor procesa
+El servidor responde
+
+
+
+CLIENT-SIDE RENDERING: Solicitar un archivo estático, pero ir haciendo peticiones asincrónicas al servidor en los puntos necesarios.
+
+El cliente solicita holamundo.html
+El servidor responde
+El cliente hace una petición asincrónica
+El servidor responde
+El cliente hace otra petición asincrónica
+El servidor responde
+
+Single Page Application
+
+
+
+
+STATIC RENDERING: Armar la página una sola vez antes de que se solicite (tiempo de "compilado"), y luego servir la página ya aramada.
+
+El servidor convierte holamundo.php en holamundo.html
+El cliente solicita holamundo.html
+El servidor responde
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
