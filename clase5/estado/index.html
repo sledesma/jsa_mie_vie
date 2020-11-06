@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <input type="text" id="txtNombre">
+    <div id="lblNombre"></div>
+
+    <script>
+
+        function render(state) {
+            document.querySelector('#lblNombre').innerHTML = state.texto;
+        }
+
+        // PRIMER RENDER
+        window.history.replaceState({texto: 'Pon un texto arriba'}, '');
+        render(history.state);
+
+        // EVENTOS PARA CAMBIAR EL ESTADO
+        document.querySelector('#txtNombre').addEventListener('input', function(){
+            history.pushState({ texto: document.querySelector('#txtNombre').value }, '');
+            render(history.state);
+        });
+
+        window.addEventListener('popstate', function(e){
+            render(e.state);
+        })
+
+    </script>
+</body>
+</html>
