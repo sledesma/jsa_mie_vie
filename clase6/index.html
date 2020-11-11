@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <input type="file" id="campo_file">
+
+    <button id="enviar">Enviar</button>
+    
+    <script>
+        const campo = document.querySelector('#campo_file');
+        const enviar = document.querySelector('#enviar');
+
+        enviar.addEventListener('click', () => {
+            const url = URL.createObjectURL(campo.files[0]);
+            console.log(url);
+        });
+        
+    </script>
+</body>
+</html>
