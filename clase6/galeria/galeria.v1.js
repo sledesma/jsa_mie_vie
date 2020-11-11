@@ -1,6 +1,6 @@
 /**
  * Version 1: Carga una sola imagen
- */
+ */https://github.com/sledesma/jsa_mie_vie
 (function() {
     // CORS: Cross-Origin Resource Sharing
     const imagenes = [

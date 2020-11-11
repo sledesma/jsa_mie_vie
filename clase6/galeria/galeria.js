@@ -1,24 +1,9 @@
 /**
  * Version 2: Carga varias imágenes a la vez
  */
-(function() {
-    const 
-        btnPrev = document.querySelector('#btnPrev'),
-
-        btnSig = document.querySelector('#btnSig'),
-
-        divImagen = document.querySelector('#imagen');
-        
-        imagenes = [
-            'img/img1.jpg', 
-            'img/img2.jpg', 
-            'img/img3.jpg', 
-            'img/img4.jpg', 
-            'img/img5.jpg' 
-        ],
-        
+(function({ btnPrev, btnSig, divImagen, imagenes }) {
+    const         
         imgPorPag = 2;
-        
     
     let 
         pagActual = 0,
@@ -74,5 +59,15 @@
         // "Equivalente" a $(document).ready()
     });
     
-})();
-
+})({
+    btnPrev: document.querySelector('#btnPrev'),
+    btnSig: document.querySelector('#btnSig'),
+    divImagen: document.querySelector('#imagen'),
+    imagenes: [
+        'img/img1.jpg', 
+        'img/img2.jpg', 
+        'img/img3.jpg', 
+        'img/img4.jpg', 
+        'img/img5.jpg' 
+    ]
+});
