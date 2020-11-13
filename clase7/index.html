@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+
+    <input type="text" id="txtBusqueda">
+
+    <div id="resultados"></div>
+
+    <template id="resultado">
+        <div>
+            <h2 class="resultado_titulo"></h2>
+            <p class="resultado_cuerpo"></p>
+        </div>
+        <hr>
+    </template>
+
+    <script src="rest.js"></script>
+    <script>
+        const posts = rest('https://jsonplaceholder.typicode.com/posts/');
+        
+
+        // Obtener todos los posts
+        posts.all().then(p => {
+
+            const resultados = document.querySelector('#resultados');
+            const template = document.querySelector('#resultado');
+
+            const contenido = template.content;
+
+            let titulo = contenido.querySelector('.resultado_titulo');
+            let cuerpo = contenido.querySelector('.resultado_cuerpo');
+
+            let primeraVuelta = true;
+
+            p.forEach(item => {
+                if(primeraVuelta) {
+                    titulo.innerHTML = item.title;
+                    cuerpo.innerHTML = item.body;
+
+                    resultados.appendChild(contenido);
+                    primeraVuelta = false;
+                } else {
+                    
+                    const clone = document.importNode(contenido, true);
+                    titulo.innerHTML = item.title;
+                    cuerpo.innerHTML = item.body;
+                    console.log(clone);
+                }
+            });
+
+        });
+
+
+    </script>
+  </body>
+</html>
