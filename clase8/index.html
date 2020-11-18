@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <input type="text" id="Buscar">
+
+    <div id="contenido"></div>
+
+    <script>
+        const API = {
+            endpoint: '',
+            all: async function() {
+                const res = await fetch(this.endpoint);
+                const json = await res.json();
+                return json;
+            },
+            get: async function(id) {
+                const res = await fetch(this.endpoint+'/'+id);
+                const json = await res.json();
+                return json;
+            }
+        }
+
+        const Post = {
+            userId: '',
+            id: '',
+            title: '',
+            body: '',
+            load: function(postObject) {
+                this.userId = postObject.userId;
+                this.id = postObject.id;
+                this.title = postObject.title;
+                this.body = postObject.body;
+            },
+            toHtml: function() {
+                return `
+                    <div style="margin: 10px;">
+                        <span>Post ${this.id}</span>
+                        <h1>${this.title}</h1>
+                        <p>${this.body}</p>
+                        <span>Usuario nro ${this.userId}</span>
+                        <hr />
+                    </div>
+                `;
+            }
+        };
+
+        const PostList = {
+            posts: [],
+
+            find: function(val) {
+                return this.posts.filter(function(__val){
+                    return __val.title.includes(val);
+                })
+            }
+        }
+
+
+
+        const miApi = Object.create(API);
+        miApi.endpoint = 'https://jsonplaceholder.typicode.com/posts';
+
+        const posts = Object.create(PostList);
+
+        miApi.all().then(res => {
+            res.forEach(post => {
+                const aux = Object.create(Post);
+                aux.load(post);
+                posts.posts.push(aux);
+            });
+
+            document.querySelector('#Buscar').addEventListener('input', (e) => {
+                let html = '';
+
+                posts.find(e.target.value).forEach(p => {
+                    html += p.toHtml();
+                });
+
+                document.querySelector('#contenido').innerHTML = html;
+            });
+
+        });
+
+        // DOM
+        // Eventos
+        // Peticiones a API
+        // History y Rutas
+        // Datos de la página (state)
+
+    </script>
+</body>
+</html>
