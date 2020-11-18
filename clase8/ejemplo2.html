@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+
+    <script>
+
+        function RESTClient(endpoint) {
+
+            const dispatch = (evento, data = null) => {
+                this.events[evento](data);
+            }
+            
+            this.events = [];
+
+            this.on = function(evento, callback) {
+                this.events[evento] = callback;
+            }
+
+            this.all = function() {
+                fetch(endpoint)
+                .then(re => re.json())
+                .then(json => {
+                    dispatch('cargaCompleta', json);
+                })
+                .catch(error => dispatch('error', error))
+            }
+
+            this.get = function(id) {
+                fetch(endpoint+'/'+id)
+                .then(re => re.json())
+                .then(json => {
+                    dispatch('cargaCompleta', json);
+                })
+                .catch(error => dispatch('error', error))
+            }
+
+        }
+
+        const cliente = new RESTClient('datos.json');
+
+        cliente.on('cargaCompleta', function(json){
+            console.log('desde la carga completa: ', json);
+        });
+
+        cliente.all();
+        
+
+    </script>
+
+</body>
+</html>
