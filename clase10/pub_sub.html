@@ -1,0 +1,96 @@
+<!--
+    Pub / Sub
+    Observer
+
+    Sirve cuando se quiere desagregar el código
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <form action="#" id="frmValidar">
+        <input type="text" placeholder="Nombre">
+        <input type="text" placeholder="Apellido">
+        <button>Validar</button>
+    </form>
+
+    <script>
+
+        class Errores {
+
+            constructor() {
+                this.errores = [];
+            }
+
+            // Subscribir
+            agregar(campo, error) {
+                this.errores.push({ campo: campo, error: error });
+            }
+
+            quitar(campo) {
+                let nuevosErrores = [];
+                this.errores.forEach(err => {
+                    if(err.campo != campo)
+                        nuevosErrores.push(err);
+                });
+                this.errores = nuevosErrores;
+            }
+
+            // Publicar
+            hayErrores() {
+                return this.errores.length > 0;
+            }
+
+            each(callback) {
+                this.errores.forEach(val => callback(val.campo, val.error));
+            }
+
+        }
+
+        const errores = new Errores();
+
+        const 
+            formulario = document.querySelector('#frmValidar'),
+            txtNombre = formulario[0],
+            txtApellido = formulario[1];
+
+        txtNombre.addEventListener('input', e => {
+            if(txtNombre.value == '') {
+                txtNombre.style = 'border: 2px solid red;'
+                errores.agregar('Nombre', 'El campo está vacío');
+            } else {
+                errores.quitar('Nombre');
+            }
+        });
+
+        txtApellido.addEventListener('input', e => {
+            if(txtApellido.value == '') {
+                errores.agregar('Apellido', 'El campo está vacío');
+            } else {
+                errores.quitar('Apellido');
+            }
+        })
+        
+        
+        formulario.addEventListener('submit', e => {
+            e.preventDefault();
+
+            if(errores.hayErrores()) {
+                errores.each(function(id, nombre){
+                    console.log('Campo: ', id, '|', 'Error: ', nombre);
+                });
+            } else {
+                alert('Todo ok');
+            }
+
+        });
+
+    </script>
+
+</body>
+</html>
