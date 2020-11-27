@@ -1,70 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
-<body>
-    
-    <div id="app">
-
-    </div>
+  </head>
+  <body>
+    <input type="text" id="busqueda" />
+    <div id="app"></div>
 
     <script>
-        // Herramientas de persistencia en el Browser
-            // Caché => Guardar archivos
-            // Storage => Guardar información (texto)
-            // IndexedDb => Bbdd
-            // Cookies
-        
-        /*
-        if(localStorage.getItem('datos'))
-        fetch('https://jsonplaceholder.typicode.com/posts')
-        */
-
-        if(localStorage.getItem('datos')) {
-            console.log('CARGANDO DESDE EL STORAGE')
-            console.log(JSON.parse(localStorage.getItem('datos')));
-        } else {
-            console.log('no existe');
-            
-            fetch('https://jsonplaceholder.typicode.com/posts')
-            .then(r => r.json())
-            .then(j => {
-                console.log('CARGANDO DESDE EL FETCH')
-                localStorage.setItem('datos', JSON.stringify(j))
-            });
+      class MiStorage extends EventTarget {
+          
+        constructor({ type = "local", sources = {} }) {
+          super();
+          this.storage = type === "local" ? localStorage : sessionStorage;
+          this.sources = sources;
+          this.sourceLoaded = new Event('sourceLoaded');
         }
 
-
-        function render(items) {
-            const element = document.querySelector('#app');
-            element.innerHTML = ''; // IMPACTO AL DOM
-            
-            const frag = document.createDocumentFragment();
-
-            items.forEach(item => {
-                const contenedor = document.createElement('div');
-                
-                const titulo = document.createElement('h2');
-                titulo.innerHTML = item.title;
-                contenedor.appendChild(titulo);
-
-                const cuerpo = document.createElement('p');
-                cuerpo.innerHTML = item.body;
-                contenedor.append(cuerpo);
-
-                contenedor.appendChild(
-                    document.createElement('hr')
-                );
-
-                frag.appendChild(contenedor);
-            });
-
-            element.appendChild(frag); // IMPACTO AL DOM
+        setSource(apiUrl, storageName) {
+          this.sources[storageName] = apiUrl;
+          return this;
         }
 
+        getSource(storageName) {
+            return this.sources[storageName];
+        }
+
+        getData(storageName) {
+            if(this.storage.getItem(storageName)) {
+                this.sourceLoaded.data = JSON.parse(this.storage.getItem(storageName));
+                this.sourceLoaded.source = 'storage';
+                this.dispatchEvent(this.sourceLoaded);
+            } else {
+                fetch(this.getSource(storageName))
+                .then(r => r.json())
+                .then(json => {
+                    this.sourceLoaded.data = json;
+                    this.sourceLoaded.source = 'external';
+                    this.storage.setItem(storageName, JSON.stringify(json));
+                    this.dispatchEvent(this.sourceLoaded);
+                });
+            }
+        }
+
+      }
+
+      const miStorage = new MiStorage({ 
+          type: "local", 
+          sources: {
+              posts: "https://jsonplaceholder.typicode.com/posts",
+              users: "https://jsonplaceholder.typicode.com/users"
+          }
+      });
+
+      miStorage.addEventListener('sourceLoaded', e => {
+        console.log(e.data);
+      });
+
+      miStorage.getData('users');
     </script>
-</body>
+  </body>
 </html>
